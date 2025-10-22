@@ -515,9 +515,9 @@ namespace KinematicCharacterController
         public const int MaxSteppingSweepIterations = 3;
         public const int MaxRigidbodyOverlapsCount = 16;
         public const float CollisionOffset = 0.01f;
-        public const float GroundProbeReboundDistance = 0.02f;
-        public const float MinimumGroundProbingDistance = 0.005f;
-        public const float GroundProbingBackstepDistance = 0.1f;
+        public const float GroundProbeReboundDistance = 0.02f; 
+        public const float MinimumGroundProbingDistance = 0.1f; // was 0.005 //good at 0.1? this one is the one causing those non ground detection stuff issues. 0.1 is the fix
+        public const float GroundProbingBackstepDistance = 0.1f; 
         public const float SweepProbingBackstepDistance = 0.002f;
         public const float SecondaryProbesVertical = 0.02f;
         public const float SecondaryProbesHorizontal = 0.001f;

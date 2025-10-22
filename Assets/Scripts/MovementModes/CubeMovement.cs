@@ -9,8 +9,6 @@ public class CubeMovement : IMovementModeHandler
         return "CubeMovement";
     }
 
-    private int wallTouchCount = 0;
-    private bool wasTouchingWallLastFrame = false;
     public Vector3 Move(CharacterMover mover, InputState input, Transform lookDirection, Vector3 lateVelocity, float deltaTime, EffectTable table)
     {
         
@@ -30,14 +28,11 @@ public class CubeMovement : IMovementModeHandler
 
         if (motor.GroundingStatus.IsStableOnGround)
         {
-            wallTouchCount = 0;
-            wasTouchingWallLastFrame = false;
 
             Vector3 velocity = inputHoriz * attrs.speed;
 
             if (input.wantsToJump)
             {
-                
                 mover.UnGround();
                 mover.InvokeJump();
 
@@ -84,56 +79,24 @@ public class CubeMovement : IMovementModeHandler
 
             velocity.y -= WorldAttributes.gravity * deltaTime;
 
+            Debug.Log(" ");
+            Debug.Log("Character: " + motor.GroundingStatus.FoundAnyGround);
+            Debug.Log("transient: " + motor.LastGroundingStatus.FoundAnyGround);
+            Debug.Log("LastMovement iteration: " + motor.LastMovementIterationFoundAnyGround);
+            Debug.Log(" ");
             //trying to prevent airclimbing sloped walls
-            //if(motor.GroundingStatus.FoundAnyGround)
-            //{
-            //    if(!touchedSlopedWall)
-            //    {
-            //        touchedSlopedWallSecondTime = false;
-            //    }
-            //    else
-            //    {
-            //        touchedSlopedWallSecondTime = true;
-            //    }
-
-            //    touchedSlopedWall = true;
-
-            //    //Debug.Log("Normal: "+ motor.GroundingStatus.GroundNormal);
-            //    //Debug.Log("Vel: " + velocity);
-            //    //Debug.Log("Late Vel: " + lateVelocity);
-            //    if ((motor.GroundingStatus.GroundNormal.x > 0 && velocity.x < 0) || (motor.GroundingStatus.GroundNormal.x < 0 && velocity.x > 0))
-            //    {
-            //        velocity.x = lateVelocity.x;
-            //    }
-
-            //    if(velocity.y > 0 && !touchedSlopedWallSecondTime)
-            //    {
-            //        velocity.y = 0;
-            //    }
-            //}
-
-            // treat any contacted but unstable ground here as "wall"
-            bool isTouchingWallThisFrame = motor.GroundingStatus.FoundAnyGround;
-
-            // count distinct touches (edge-triggered)
-            if (isTouchingWallThisFrame && !wasTouchingWallLastFrame)
+            if (motor.GroundingStatus.FoundAnyGround)
             {
-                wallTouchCount++;
-            }
-            wasTouchingWallLastFrame = isTouchingWallThisFrame;
 
-            if (isTouchingWallThisFrame)
-            {
-                if ((motor.GroundingStatus.GroundNormal.x > 0 && velocity.x < 0) ||
-                    (motor.GroundingStatus.GroundNormal.x < 0 && velocity.x > 0))
+
+                if ((motor.GroundingStatus.GroundNormal.x > 0 && velocity.x <= 0) || (motor.GroundingStatus.GroundNormal.x < 0 && velocity.x >= 0))
                 {
                     velocity.x = lateVelocity.x;
                 }
 
-                // kill Y only on the second distinct touch
-                if (velocity.y > 0f && wallTouchCount >= 2)
+                if (velocity.y > 0)
                 {
-                    velocity.y = 0f;
+                    velocity.y = 0;
                 }
             }
 

@@ -88,6 +88,7 @@ public class CharacterMover : MonoBehaviour, KinematicCharacterController.IChara
     public void AfterCharacterUpdate(float deltaTime)
     {
         vel = Motor.Velocity;
+
     }
 
 
@@ -110,12 +111,21 @@ public class CharacterMover : MonoBehaviour, KinematicCharacterController.IChara
 
     public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
     {
+       
+        //if(!Motor.GroundingStatus.IsStableOnGround)
+        //{
+        //    Debug.Log("STOP IGNORING THE GROUND");
+        //    Motor.ForceGround();
+        //}
+        
         //throw new System.NotImplementedException();
     }
 
     public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport)
     {
         //throw new System.NotImplementedException();
+
+        //hitStabilityReport.
     }
 
     public void OnDiscreteCollisionDetected(Collider hitCollider)

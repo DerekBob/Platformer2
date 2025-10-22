@@ -540,8 +540,8 @@ MonoBehaviour:
   PreserveAttachedRigidbodyMomentum: 1
   HasPlanarConstraint: 1
   PlanarConstraintAxis: {x: 0, y: 0, z: 1}
-  MaxMovementIterations: 437
-  MaxDecollisionIterations: 242
+  MaxMovementIterations: 10
+  MaxDecollisionIterations: 8
   CheckMovementInitialOverlaps: 1
   KillVelocityWhenExceedMaxMovementIterations: 1
   KillRemainingMovementWhenExceedMaxMovementIterations: 1
