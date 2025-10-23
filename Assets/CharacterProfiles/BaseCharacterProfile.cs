@@ -25,6 +25,8 @@ public class MovementAttributes
     public float maxAirSpeed;
     public float jumpHeight;
     public float jumpCoolDown;
+    public float DashDistance;
+    public float DashSpeed;
 }
 
 [System.Serializable]
