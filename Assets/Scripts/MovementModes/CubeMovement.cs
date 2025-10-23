@@ -79,11 +79,11 @@ public class CubeMovement : IMovementModeHandler
 
             velocity.y -= WorldAttributes.gravity * deltaTime;
 
-            Debug.Log(" ");
-            Debug.Log("Character: " + motor.GroundingStatus.FoundAnyGround);
-            Debug.Log("transient: " + motor.LastGroundingStatus.FoundAnyGround);
-            Debug.Log("LastMovement iteration: " + motor.LastMovementIterationFoundAnyGround);
-            Debug.Log(" ");
+            //Debug.Log(" ");
+            //Debug.Log("Character: " + motor.GroundingStatus.FoundAnyGround);
+            //Debug.Log("transient: " + motor.LastGroundingStatus.FoundAnyGround);
+            //Debug.Log("LastMovement iteration: " + motor.LastMovementIterationFoundAnyGround);
+            //Debug.Log(" ");
             //trying to prevent airclimbing sloped walls
             if (motor.GroundingStatus.FoundAnyGround)
             {

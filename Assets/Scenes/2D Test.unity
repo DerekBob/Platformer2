@@ -525,7 +525,7 @@ MonoBehaviour:
   StableGroundLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  DiscreteCollisionEvents: 0
+  DiscreteCollisionEvents: 1
   StepHandling: 1
   MaxStepHeight: 0.5
   AllowSteppingWithoutStableGrounding: 0
@@ -540,8 +540,8 @@ MonoBehaviour:
   PreserveAttachedRigidbodyMomentum: 1
   HasPlanarConstraint: 1
   PlanarConstraintAxis: {x: 0, y: 0, z: 1}
-  MaxMovementIterations: 10
-  MaxDecollisionIterations: 8
+  MaxMovementIterations: 2
+  MaxDecollisionIterations: 1
   CheckMovementInitialOverlaps: 1
   KillVelocityWhenExceedMaxMovementIterations: 1
   KillRemainingMovementWhenExceedMaxMovementIterations: 1
@@ -645,13 +645,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665035467}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.006693344, y: 0.003946368, z: 0.8142284, w: 0.5804926}
+  m_LocalRotation: {x: -0.002594577, y: -0.0015977635, z: 0.79111063, w: 0.6116655}
   m_LocalPosition: {x: -6.686799, y: 4.8, z: 0}
   m_LocalScale: {x: 980.30316, y: 2.5425081, z: 5.0758}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -0.813, y: -0.362, z: 109.03}
+  m_LocalEulerAnglesHint: {x: -0.037, y: -0.347, z: 104.58}
 --- !u!1001 &888177660
 PrefabInstance:
   m_ObjectHideFlags: 0
