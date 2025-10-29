@@ -24,43 +24,43 @@ public class DashMovement : IMovementModeHandler
             finalPos = mover.transform.position;
         }
 
-        //if the dash goes its certain distance
-        if (mover.dashed == true)
-        {
-            finalPos = mover.transform.position;
-            currentdist += Vector3.Distance(startPos, finalPos);
+//        //if the dash goes its certain distance
+//        if (mover.dashed == true)
+//        {
+//            finalPos = mover.transform.position;
+//            currentdist += Vector3.Distance(startPos, finalPos);
 
-            if (currentdist >= table.GetCurrentAttributes().DashDistance) //if it goes over the dash distance, then we stop
-            {
-                Vector3 dir = (finalPos - startPos).normalized; //the direction between last position and this position
+//            if (currentdist >= table.GetCurrentAttributes().DashDistance) //if it goes over the dash distance, then we stop
+//            {
+//                Vector3 dir = (finalPos - startPos).normalized; //the direction between last position and this position
 
-                currentdist -= Vector3.Distance(startPos, finalPos); //reset back to the original distance.
-;
-                float distanceRemaining = table.GetCurrentAttributes().DashDistance - currentdist; //find the required distance to stop at
+//                currentdist -= Vector3.Distance(startPos, finalPos); //reset back to the original distance.
+//;
+//                float distanceRemaining = table.GetCurrentAttributes().DashDistance - currentdist; //find the required distance to stop at
 
-                //check for any obstruction. make capsule cast later.
-                RaycastHit hit;
-                if (Physics.Raycast(startPos, dir, out hit, distanceRemaining))
-                {
-                    mover.GetMotor().MoveCharacter(hit.point); //hit something so end up at hit point
-                    Debug.Log(hit.collider.name);
-                }
-                else
-                {
-                    mover.GetMotor().MoveCharacter(finalPos + dir * distanceRemaining);
-                }
+//                //check for any obstruction. make capsule cast later.
+//                RaycastHit hit;
+//                if (Physics.Raycast(startPos, dir, out hit, distanceRemaining, LayerMask.GetMask("Terrain")))
+//                {
+//                    mover.GetMotor().MoveCharacter(hit.point); //hit something so end up at hit point
+//                    Debug.Log(hit.collider.name);
+//                }
+//                else
+//                {
+//                    mover.GetMotor().MoveCharacter(finalPos + dir * distanceRemaining);
+//                }
 
-                mover.dashed = false;
-                currentdist = 0;
-                return Vector3.zero;
-            }
-            else
-            {
-                startPos = mover.transform.position;
-            }
+//                mover.dashed = false;
+//                currentdist = 0;
+//                return lateVelocity;
+//            }
+//            else
+//            {
+//                startPos = mover.transform.position;
+//            }
 
             
-        }
+//        }
 
 
 
@@ -69,6 +69,7 @@ public class DashMovement : IMovementModeHandler
         {
             mover.dashed = false;
             currentdist = 0;
+            Debug.Log("helo");
             return Vector3.zero;
         }
 
@@ -122,7 +123,7 @@ public class DashMovement : IMovementModeHandler
 
             mover.dashed = false;
             currentdist = 0;
-            return Vector3.zero;
+            return velocity;
         }
 
         return velocity;

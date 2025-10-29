@@ -24,8 +24,8 @@ MonoBehaviour:
     maxAirSpeed: 20
     jumpHeight: 10
     jumpCoolDown: 0
-    DashDistance: 20
-    DashSpeed: 100
+    DashDistance: 30
+    DashSpeed: 50
   characterAnimations:
     idle: Mannequin Idle
     walking: Test Walk
