@@ -10,11 +10,17 @@ public class CubeMovement : IMovementModeHandler
     }
 
     bool jumpAvailable = true;
+    bool onGround = true;
     float coyoteTime = 0.2f;
+    float coyoteTimer = 0;
+    float jumpCooldown = 0.1f;
+    float jumpCooldownTimer = 0;
     public Vector3 Move(CharacterMover mover, InputState input, Transform lookDirection, Vector3 lateVelocity, float deltaTime, EffectTable table)
     {
         
         var attrs = table.GetCurrentAttributes();
+
+        Vector3 velocity = new Vector3();
 
         Vector3 up = mover.GetCharacterUp();
         Vector3 right = Vector3.right;
@@ -28,25 +34,40 @@ public class CubeMovement : IMovementModeHandler
         // Reduce WASD to left/right only: -1, 0, or +1 along 'right'
         Vector3 inputHoriz = Vector3.ProjectOnPlane(input.movementInput, up);
 
-        if (motor.GroundingStatus.IsStableOnGround)
+        onGround = motor.GroundingStatus.IsStableOnGround;
+
+        if (onGround) //ground
         {
+            coyoteTimer = 0; //needs to be reset duh
 
-            Vector3 velocity = inputHoriz * attrs.speed;
-
-            if (input.wantsToJump)
+            if (!jumpAvailable) //restore jump after cooldown
             {
-                mover.UnGround();
-                mover.InvokeJump();
-
-                float impulse = MovementMath.JumpToCertainHeight(WorldAttributes.gravity, attrs.jumpHeight);
-                velocity.y = 0;
-                velocity += mover.GetCharacterUp() * impulse - Vector3.Project(velocity, up);
+                jumpCooldownTimer += deltaTime;
+                if(jumpCooldown <= jumpCooldownTimer)
+                {
+                    jumpAvailable = true;
+                    jumpCooldownTimer = 0;
+                }
             }
-            return velocity;
+
+            velocity = inputHoriz * attrs.speed;
+
+            //return velocity;
         }
-        else
+        else //air
         {
-            Vector3 velocity = lateVelocity;
+
+            if(jumpAvailable) //disables jumpAvailable after coyote time;
+            {
+                coyoteTimer += deltaTime;
+                if(coyoteTime <= coyoteTimer)
+                {
+                    jumpAvailable = false;
+                    coyoteTimer = 0;
+                }
+            }
+
+            velocity = lateVelocity;
 
             // Current horizontal scalar along the left/right axis
             float v = Vector3.Dot(velocity, right);
@@ -103,12 +124,27 @@ public class CubeMovement : IMovementModeHandler
             }
 
 
-            return velocity;
 
+            //return velocity;
+
+        }
+
+        if (input.wantsToJump && jumpAvailable)
+        {
+            jumpAvailable = false;
+
+            mover.UnGround();
+            mover.InvokeJump();
+
+
+            float impulse = MovementMath.JumpToCertainHeight(WorldAttributes.gravity, attrs.jumpHeight);
+            velocity.y = 0;
+            velocity += mover.GetCharacterUp() * impulse - Vector3.Project(velocity, up);
         }
 
 
 
-        //return Vector3.zero;
+        return velocity;
     }
+
 }

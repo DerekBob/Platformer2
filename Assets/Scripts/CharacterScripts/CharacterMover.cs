@@ -51,6 +51,7 @@ public class CharacterMover : MonoBehaviour, KinematicCharacterController.IChara
 
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
+
         //to stop some errors
         if (lookDirection == null)
         {
