@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlat : MonoBehaviour, KinematicCharacterController.IMoverController
+public class HorizPlat : MonoBehaviour, KinematicCharacterController.IMoverController
 {
     public PhysicsMover mover;
     public float amplitude = 2f;
@@ -21,14 +21,14 @@ public class MovingPlat : MonoBehaviour, KinematicCharacterController.IMoverCont
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void IMoverController.UpdateMovement(out Vector3 goalPosition, out Quaternion goalRotation, float deltaTime)
     {
         time += deltaTime;
-        float offsetY = Mathf.Sin(time * frequency * Mathf.PI * 2f) * amplitude;
-        goalPosition = startPos + new Vector3(0f, offsetY, 0f);
+        float offsetX = Mathf.Sin(time * frequency * Mathf.PI * 2f) * amplitude;
+        goalPosition = startPos + new Vector3(offsetX, 0f, 0f);
         goalRotation = transform.rotation;
     }
 }

@@ -9,6 +9,8 @@ public class CubeMovement : IMovementModeHandler
         return "CubeMovement";
     }
 
+    bool jumpAvailable = true;
+    float coyoteTime = 0.2f;
     public Vector3 Move(CharacterMover mover, InputState input, Transform lookDirection, Vector3 lateVelocity, float deltaTime, EffectTable table)
     {
         

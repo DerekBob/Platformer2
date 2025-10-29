@@ -12,7 +12,6 @@ public class DashMovement : IMovementModeHandler
     Vector3 startPos;
     Vector3 finalPos;
     float currentdist; //not a straightline distance, we get the total commulative distance
-    private float forceStopDist = 2; //if it absolutely exceeds its distance due to outragous speed
     public Vector3 Move(CharacterMover mover, InputState input, Transform lookDirection, Vector3 lateVelocity, float deltaTime, EffectTable table)
     {
         //We dont go by input perhaps?
@@ -30,12 +29,13 @@ public class DashMovement : IMovementModeHandler
         {
             finalPos = mover.transform.position;
             currentdist += Vector3.Distance(startPos, finalPos);
+
             if (currentdist >= table.GetCurrentAttributes().DashDistance) //if it goes over the dash distance, then we stop
             {
                 Vector3 dir = (finalPos - startPos).normalized; //the direction between last position and this position
 
                 currentdist -= Vector3.Distance(startPos, finalPos); //reset back to the original distance.
-
+;
                 float distanceRemaining = table.GetCurrentAttributes().DashDistance - currentdist; //find the required distance to stop at
 
                 //check for any obstruction. make capsule cast later.
@@ -47,7 +47,7 @@ public class DashMovement : IMovementModeHandler
                 }
                 else
                 {
-                    mover.GetMotor().MoveCharacter(startPos + dir * distanceRemaining);
+                    mover.GetMotor().MoveCharacter(finalPos + dir * distanceRemaining);
                 }
 
                 mover.dashed = false;
@@ -58,6 +58,8 @@ public class DashMovement : IMovementModeHandler
             {
                 startPos = mover.transform.position;
             }
+
+            
         }
 
 
